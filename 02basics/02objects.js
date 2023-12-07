@@ -1,4 +1,7 @@
 //singleton-objects created by constructor-Object.create
+const userSingleton=new Object();// singleton object
+
+
 //object literals
 
 const mySym=Symbol("key1")
@@ -37,3 +40,39 @@ user.greeting2=function(){
 console.log(user.greeting);//returns function reference
 console.log(user.greeting())//executes the function
 console.log(user.greeting2())
+
+/*--------------------------------------------- */
+const tUser={}// non-singleton
+
+tUser.id="123abc";
+tUser.name="Alex";
+tUser.isLoggedIn=false;
+
+console.log(tUser);
+
+const rUser={
+    email:"alex@gmail.com",
+    fullname:{
+        userfullname:{
+            firstname:"Alex",
+            lastname:"Forbes"
+        }
+    }
+}
+
+console.log(rUser.fullname.userfullname.lastname);
+
+//Combining objects
+const obj1={1:"a",2:"b"}
+const obj2={3:"a",4:"b"}
+const obj3={...obj1,...obj2}
+const obj4=Object.assign({},obj1,obj2)
+console.log(obj3);
+console.log(obj4);
+
+console.log(tUser);
+console.log(Object.keys(tUser));
+console.log(Object.values(tUser));
+console.log(Object.entries(tUser));
+
+console.log(tUser.hasOwnProperty("isLoggedIn"));
