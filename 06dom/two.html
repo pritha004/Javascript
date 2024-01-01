@@ -6,11 +6,47 @@
     <title>DOM</title>
 </head>
 <body style="background-color: #212121;color:white">
+    
+    <div class="parent">
+        <div class="day">Monday</div>
+        <div class="day">Tuesday</div>
+        <div class="day">Wednesday</div>
+        <div class="day">Thursday</div>
+    </div>
+    <hr/>
     <ul class="language">
         <li>Javascript</li>
     </ul>
 </body>
 <script>
+    
+    //Parent to Child
+    const parent=document.querySelector(".parent");
+    console.log(parent);
+    console.log(parent.children);
+    // console.log(parent.children[1].innerHTML);
+
+    for (let i = 0; i < parent.children.length; i++) {
+        const element = parent.children[i].innerHTML;
+        console.log(element);
+    }
+
+    parent.children[1].style.color="orange";
+    console.log(parent.firstElementChild);
+    console.log(parent.lastElementChild);
+
+    //Child to Parent
+    const day1=document.querySelector('.day');
+    console.log(day1.parentElement);
+
+    // Next Sibling
+    console.log(day1.nextElementSibling);
+
+    //Nodes
+    console.log("Nodes: ",parent.childNodes);
+
+
+    /* Add, Edit and Delete elements*/
     // Add
     function addLanguage(langName){
         const li=document.createElement('li');
