@@ -19,5 +19,29 @@
    </div>
 </body>
 <script>
+    //Event Propagation: Bubbling and Capturing
+
+    // document.getElementById('images').addEventListener('click',(e)=>{
+    //     console.log("clicked inside ul");
+    // },false)
+
+    // document.getElementById('owl').addEventListener('click',(e)=>{
+    //     console.log("clicked owl");
+    // },false)
+
+    // document.getElementById('google').addEventListener('click',(e)=>{
+    //     console.log("clicked google");
+    //     e.preventDefault();
+    // },false)
+
+    document.querySelector("#images").addEventListener('click',(e)=>{
+        console.log(e.target.tagName);
+        if(e.target.tagName==="IMG"){
+        let removeIt=e.target.parentNode;
+        removeIt.remove();
+        }
+
+    })
+
 </script>
 </html>
