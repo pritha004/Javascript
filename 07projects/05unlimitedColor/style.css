@@ -1,0 +1,15 @@
+body{
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: white;
+    flex-direction: column;
+}
+
+button{
+    width: 10vw;
+    padding: 8px;
+}
