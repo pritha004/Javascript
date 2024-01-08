@@ -8,7 +8,8 @@
 		"vscode": {
 			"extensions": [
 				"ritwickdey.LiveServer",
-				"xabikos.JavaScriptSnippets"
+				"xabikos.JavaScriptSnippets",
+				"esbenp.prettier-vscode"
 			]
 		}
 	}
