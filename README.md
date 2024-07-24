@@ -57,3 +57,63 @@
         alert(height || 100); // 100
         alert(height ?? 100); // 0
     ```
+- ***Strict mode***
+    - To fully enable all features of modern JavaScript, we should start scripts with "use strict". The directive must be at the top of a script or at the beginning of a function body.
+
+    - Without "use strict", everything still works, but some features behave in the old-fashioned, “compatible” way. We’d generally prefer the modern behavior.
+
+    - Some modern features of the language (like classes) enable strict mode implicitly.
+
+- ***Debugging***
+    - “Resume”: continue the execution, hotkey F8
+    - “Step”: run the next command, hotkey F9
+    - “Step over”: run the next command, but don’t go into a function, hotkey F10.
+        Similar to the previous “Step” command, but behaves differently if the next statement is a function call (not a built-in, like alert, but a function of our own).
+
+        If we compare them, the “Step” command goes into a nested function call and pauses the execution at its first line, while “Step over” executes the nested function call invisibly to us, skipping the function internals.
+        The execution is then paused immediately after that function call.
+    - “Step into”, hotkey F11.
+        That’s similar to “Step”, but behaves differently in case of asynchronous function calls. 
+
+        “Step” command ignores async actions, such as setTimeout (scheduled function call), that execute later. The “Step into” goes into their code, waiting for them if necessary.
+    - “Step out”: continue the execution till the end of the current   function, hotkey Shift+F11.
+        Continue the execution and stop it at the very last line of the current function. That’s handy when we accidentally entered a nested call using , but it does not interest us, and we want to continue to its end as soon as possible.
+    - enable/disable all breakpoints.
+        That button does not move the execution. Just a mass on/off for breakpoints.
+
+    - enable/disable automatic pause in case of an error.
+        When enabled, if the developer tools is open, an error during the script execution automatically pauses it. Then we can analyze variables in the debugger to see what went wrong. So if our script dies with an error, we can open debugger, enable this option and reload the page to see where it dies and what’s the context at that moment.
+
+- ***Transpilers***
+    - A transpiler is a special piece of software that translates source code to another source code. It can parse (“read and understand”) modern code and rewrite it using older syntax constructs, so that it’ll also work in outdated engines.
+    E.g. JavaScript before year 2020 didn’t have the “nullish coalescing operator” ??. So, if a visitor uses an outdated browser, it may fail to understand the code like 
+    height = height ?? 100.
+    A transpiler would analyze our code and rewrite height ?? 100 into (height !== undefined && height !== null) ? height : 100.
+
+    ```javascript
+        // before running the transpiler
+        height = height ?? 100;
+
+        // after running the transpiler
+        height = (height !== undefined && height !== null) ? height : 100;  
+    ```
+
+    - Usually, a developer runs the transpiler on their own computer, and then deploys the transpiled code to the server.
+    Speaking of names, **Babel** is one of the most prominent transpilers out there.
+    Modern project build systems, such as **webpack**, provide a means to run a transpiler automatically on every code change, so it’s very easy to integrate into the development process.
+
+- ***Polyfills***
+    - A script that updates/adds new functions is called “polyfill”. It “fills in” the gap and adds missing implementations.For example, Math.trunc(n) is a function that “cuts off” the decimal part of a number, e.g Math.trunc(1.23) returns 1.
+    In some (very outdated) JavaScript engines, there’s no Math.trunc, so such code will fail.
+    There’s no need to transpile anything here. We just need to declare the missing function.
+    - For this particular case, the polyfill for Math.trunc is a script that implements it, like this:
+
+    ```javascript
+        if (!Math.trunc) { // if no such function
+        // implement it
+        Math.trunc = function(number) {
+        // Math.ceil and Math.floor exist even in ancient JavaScript engines
+        return number < 0 ? Math.ceil(number) : Math.floor(number);
+        };
+        }
+    ```
