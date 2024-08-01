@@ -117,3 +117,39 @@
         };
         }
     ```
+
+- ***Object***
+    - Object can be created in two ways: Object Constructor and Object Literal.
+
+    ```javascript
+        let user = new Object(); // "object constructor" syntax
+        let user = {};  // "object literal" syntax
+    ```
+
+    - "in" : Check whether a property name/ key exists in an object. Left side of "in" there must be a property name.
+
+    ```javascript
+        let user = { name: "John", age: 30 };
+
+        alert( "age" in user ); // true, user.age exists
+        alert( "blabla" in user ); // false, user.blabla doesn't exist
+    
+        let key = "age";
+        alert( key in user ); // true, property "age" exists
+    ```
+
+    - Most of the time the comparison with undefined works fine. But   there’s a special case when it fails, but "in" works correctly. It’s when an object property exists, but stores undefined:
+
+    ```javascript
+        let obj = {
+            test: undefined
+        };
+
+        alert( obj.test ); // it's undefined, so - no such property?
+
+        alert( "test" in obj ); // true, the property does exist!
+    ```
+
+    - To delete a property: delete obj.prop.
+
+    - To iterate over an object: for (let key in obj) loop.
