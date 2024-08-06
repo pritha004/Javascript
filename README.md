@@ -191,7 +191,7 @@
                   alert(clone.sizes.width); // 50, not related
             ```
 
- - Garbage Collection
+ - ***Garbage Collection***
    - Memory management in JavaScript is performed automatically and invisibly to us.
    - Garbage collector monitors all objects and removes those that have become unreachable.
    - The basic garbage collection algorithm is called “mark-and-sweep”. The following “garbage collection” steps are regularly performed:
@@ -200,3 +200,103 @@
       - Then it visits marked objects and marks their references. All visited objects are remembered, so as not to visit the same object twice in the future.
       - …And so on until every reachable (from the roots) references are visited.
       - All objects except marked ones are removed.
+
+- ***'this' keyword***
+  - The value of this is the object “before dot”, the one used to call the method.
+    
+    ```javascript
+        let user = {
+        name: "John",
+        age: 30,
+
+        sayHi() {
+            // "this" is the "current object"
+            alert(this.name);
+            }
+        };
+    
+        user.sayHi(); // John
+    ```
+  - Arrow functions are special: they don’t have their “own” this. If we reference this from such a function, it’s taken from the outer “normal” function.
+
+    ```javascript
+        let user = {
+        firstName: "Ilya",
+        sayHi() {
+            let arrow = () => alert(this.firstName);
+            arrow();
+            }
+        };
+
+        user.sayHi(); // Ilya
+    ```
+
+- ***Constructor Function and `new` keyword***
+  - Constructor functions technically are regular functions. There are two conventions though:
+    - They are named with capital letter first.
+    - They should be executed only with `new` operator.
+
+      ```javascript
+          function User(name) {
+          this.name = name;
+          this.isAdmin = false;
+            }
+
+          let user = new User("Jack");
+
+          alert(user.name); // Jack
+          alert(user.isAdmin); // false
+      ```
+      
+  - When a function is executed with new, it does the following steps:
+    1. A new empty object is created and assigned to `this`.
+    2. The function body executes. Usually it modifies `this`, adds new properties to it.
+    3. The value of `this` is returned.
+
+       ```javascript
+           // new User() does :
+
+           function User(name) {
+           // this = {};  (implicitly)
+
+           // add properties to this
+           this.name = name;
+           this.isAdmin = false;
+
+           // return this;  (implicitly)
+            }
+       ```
+
+  - Immediately Called Constructor Function: If we have many lines of code all about creation of a single complex object, we can wrap them in an immediately called constructor function, like below. This constructor can’t be called again, because it is not saved anywhere, just created and called. So this trick aims to encapsulate the code that constructs the single object, without future reuse.
+   
+       ```javascript
+            // create a function and immediately call it with new
+            let user = new function() {
+            this.name = "John";
+            this.isAdmin = false;
+
+            // ...other code for user creation
+            // maybe complex logic and statements
+            // local variables etc
+            };
+       ```
+       
+   - new.target: Inside a function, we can check whether it was called with new (in constructor mode) or without it (in regular mode), using a special new.target property. It is undefined for regular calls and equals the function if called with new.
+
+      ```javascript
+          function User() {
+              alert(new.target);
+            }
+
+          // without "new":
+          User(); // undefined
+
+          // with "new":
+          new User(); // function User { ... }
+      ```
+
+   - `return` from constructor: Usually, constructors do not have a return statement. Their task is to write all necessary stuff into this, and it automatically becomes the result. But if there is a return statement, then the rule is simple:
+        - If return is called with an object, then the object is returned instead of `this`.
+        - If return is called with a primitive, it’s ignored.
+
+
