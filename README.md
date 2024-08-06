@@ -164,3 +164,39 @@
           let b = {}; // two independent objects
           alert( a == b ); // false
       ```
+  - Cloning: Create a new object and replicate the structure of the existing one
+      
+           ```javascript
+                  // Object.assign - simple object cloning
+                  let user = {
+                          name: "John",
+                          age: 30
+                  };
+                  let clone = Object.assign({}, user);
+ 
+                  // structuredClone(object) -  clones the object with all nested properties (except functions).
+                  let user = {
+                      name: "John",
+                      sizes: {
+                        height: 182,
+                        width: 50
+                      }
+                  };
+                  let clone = structuredClone(user);
+
+                  alert( user.sizes === clone.sizes ); // false, different objects
+
+                  // user and clone are totally unrelated now
+                  user.sizes.width = 60;    // change a property from one place
+                  alert(clone.sizes.width); // 50, not related
+            ```
+
+ - Garbage Collection
+   - Memory management in JavaScript is performed automatically and invisibly to us.
+   - Garbage collector monitors all objects and removes those that have become unreachable.
+   - The basic garbage collection algorithm is called “mark-and-sweep”. The following “garbage collection” steps are regularly performed:
+      - The garbage collector takes roots and “marks” (remembers) them.
+      - Then it visits and “marks” all references from them.
+      - Then it visits marked objects and marks their references. All visited objects are remembered, so as not to visit the same object twice in the future.
+      - …And so on until every reachable (from the roots) references are visited.
+      - All objects except marked ones are removed.
