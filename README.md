@@ -4,10 +4,10 @@
     - JavaScript is called “dynamically typed”, meaning that there exist data types, but variables are not bound to any of them.
     - Dynamic typing refers to a feature of some programming languages where variable types are determined at runtime rather than at compile-time. In other words, in dynamically typed languages, we don’t need to specify the type of a variable when we declare it. Instead, the type is assigned based on the value that is currently held by the variable.
 
-    ```javascript
-    let example = 42;   // Here, 'example' is assigned a number
-    example = "Hello";  // Now, 'example' holds a string
-    ```
+        ```javascript
+            let example = 42;   // Here, 'example' is assigned a number
+            example = "Hello";  // Now, 'example' holds a string
+        ```
 
 - ***8 Data Types***
     1. Number: Represents both integer and floating point numbers.
@@ -51,12 +51,12 @@
         In other words, || doesn’t distinguish between false, 0, an empty string "" and null/undefined. They are all the same – falsy values. If any of these is the first argument of ||, then we’ll get the second argument as the result.\
         We may want to use default value only when the variable is null/undefined. That is, when the value is really unknown/not set.
 
-    ```javascript
-        let height = 0;
+        ```javascript
+            let height = 0;
 
-        alert(height || 100); // 100
-        alert(height ?? 100); // 0
-    ```
+            alert(height || 100); // 100
+            alert(height ?? 100); // 0
+        ```
 - ***Strict mode***
     - To fully enable all features of modern JavaScript, we should start scripts with "use strict". The directive must be at the top of a script or at the beginning of a function body.
 
@@ -90,13 +90,13 @@
     height = height ?? 100.
     A transpiler would analyze our code and rewrite height ?? 100 into (height !== undefined && height !== null) ? height : 100.
 
-    ```javascript
-        // before running the transpiler
-        height = height ?? 100;
+        ```javascript
+            // before running the transpiler
+            height = height ?? 100;
 
-        // after running the transpiler
-        height = (height !== undefined && height !== null) ? height : 100;  
-    ```
+            // after running the transpiler
+            height = (height !== undefined && height !== null) ? height : 100;  
+        ```
 
     - Usually, a developer runs the transpiler on their own computer, and then deploys the transpiled code to the server.
     Speaking of names, **Babel** is one of the most prominent transpilers out there.
@@ -108,48 +108,59 @@
     There’s no need to transpile anything here. We just need to declare the missing function.
     - For this particular case, the polyfill for Math.trunc is a script that implements it, like this:
 
-    ```javascript
-        if (!Math.trunc) { // if no such function
-        // implement it
-        Math.trunc = function(number) {
-        // Math.ceil and Math.floor exist even in ancient JavaScript engines
-        return number < 0 ? Math.ceil(number) : Math.floor(number);
-        };
-        }
-    ```
+        ```javascript
+            if (!Math.trunc) { // if no such function
+            // implement it
+            Math.trunc = function(number) {
+            // Math.ceil and Math.floor exist even in ancient JavaScript engines
+            return number < 0 ? Math.ceil(number) : Math.floor(number);
+            };
+            }
+        ```
 
 - ***Object***
     - Object can be created in two ways: Object Constructor and Object Literal.
 
-    ```javascript
-        let user = new Object(); // "object constructor" syntax
-        let user = {};  // "object literal" syntax
-    ```
+        ```javascript
+            let user = new Object(); // "object constructor" syntax
+            let user = {};  // "object literal" syntax
+        ```
 
     - "in" : Check whether a property name/ key exists in an object. Left side of "in" there must be a property name.
 
-    ```javascript
-        let user = { name: "John", age: 30 };
+        ```javascript
+            let user = { name: "John", age: 30 };
 
-        alert( "age" in user ); // true, user.age exists
-        alert( "blabla" in user ); // false, user.blabla doesn't exist
+            alert( "age" in user ); // true, user.age exists
+            alert( "blabla" in user ); // false, user.blabla doesn't exist
     
-        let key = "age";
-        alert( key in user ); // true, property "age" exists
-    ```
+            let key = "age";
+            alert( key in user ); // true, property "age" exists
+        ```
 
     - Most of the time the comparison with undefined works fine. But   there’s a special case when it fails, but "in" works correctly. It’s when an object property exists, but stores undefined:
 
-    ```javascript
-        let obj = {
-            test: undefined
-        };
+        ```javascript
+            let obj = {
+                test: undefined
+            };
 
-        alert( obj.test ); // it's undefined, so - no such property?
-
-        alert( "test" in obj ); // true, the property does exist!
-    ```
+            alert( obj.test ); // it's undefined, so - no such property?
+            alert( "test" in obj ); // true, the property does exist!
+        ```
 
     - To delete a property: delete obj.prop.
 
     - To iterate over an object: for (let key in obj) loop.
+    - Comparison by reference: Two objects are equal only if they are the same object (reference the same object).
+      
+      ```javascript
+          let a = {};
+          let b = a; // copy the reference
+          alert( a == b ); // true, both variables reference the same object
+          alert( a === b ); // true
+
+          let a = {};
+          let b = {}; // two independent objects
+          alert( a == b ); // false
+      ```
