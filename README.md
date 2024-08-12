@@ -300,3 +300,31 @@
         - If return is called with a primitive, it’s ignored.
 
 
+- ***Optional Chaining (?.)***
+    - The optional chaining ?. stops the evaluation if the value before ?. is `undefined` or `null` and returns `undefined`.
+    - The optional chaining ?. syntax has three forms:
+
+        1. obj?.prop – returns obj.prop if obj exists, otherwise undefined.
+        2. obj?.[prop] – returns obj[prop] if obj exists, otherwise undefined.
+        3. obj.method?.() – calls obj.method() if obj.method exists, otherwise returns undefined.
+
+- ***Symbols***
+    - A symbol is a “primitive unique value” with an optional description. A value of this type can be created using Symbol():
+
+    ```javascript
+        let id = Symbol();
+        // Upon creation, we can give symbols a description (also called a symbol name), mostly useful for debugging purposes
+
+        let id = Symbol("id"); // id is a symbol with the description "id"
+    ```
+
+    - Symbols are guaranteed to be unique. Even if we create many symbols with exactly the same description, they are different values. The description is just a label that doesn’t affect anything.
+
+    ```javascript
+        let id1 = Symbol("id");
+        let id2 = Symbol("id");
+
+        alert(id1 == id2); // false
+    ```
+
+    - Symbols don’t auto-convert to a string.
